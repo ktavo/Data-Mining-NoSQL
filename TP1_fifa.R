@@ -4,11 +4,17 @@ setwd("E:\UBA\Data Mining\TP1")
 #Para matriz de correlaciones
 library("corrplot")
 library("ggplot2")
-
 require("mongolite")
+
+#Conexión colleción Tweets
 tweetsConection <- mongo(collection = "FIFA-dump_tweets", db = "fifa", url = "mongodb://localhost")
 fullTwwetsQuery <- tweetsConection$find('{}')
 seleTwwetsQuery <- tweetsConection$find('{"screen_name" : "FCFSeleccionCol"}')
+
+#Conexión colleción Users
+userConection <- mongo(collection = 'FIFA-dump_users', db = "fifa", url = "mongodb://localhost")
+fullUsersQuery <- userConection$find('{}')
+seleTwwetsQuery <- userConection$find('{"screen_name" : "FCFSeleccionCol"}')
 
 #correlaciones numéricas de tweets
 tweetVariables = c("favorite_count", "retweet_count")
@@ -20,8 +26,8 @@ corrplot.mixed(numericTweetDataCorrelationMatrix, lower = "number", upper = "sha
 userVariables = c("favourites_count", "followers_count", "friends_count",
                    "listed_count", "statuses_count")
 numericUserData <- fullUsersQuery[userVariables]
-numericTweetDataCorrelationMatrix = cor(numericTweetData)
-corrplot.mixed(numericTweetDataCorrelationMatrix, lower = "number", upper = "shade", addshade = "all")
+numericUserDataCorrelationMatrix = cor(numericUserData)
+corrplot.mixed(numericUserDataCorrelationMatrix, lower = "number", upper = "shade", addshade = "all")
 
 
 favoriteCount <- fullTwwetsQuery["favorite_count"]
