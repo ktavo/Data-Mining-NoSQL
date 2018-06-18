@@ -46,7 +46,7 @@ demoQuery <- tweetsConection$find('{"favorite_count" : "{ "$gt": "1" }"}')
 
 
 #Merge two collections
-tweetsAndUsers <- merge(fullTwwetsQuery,fullUserssQuery,by="user_id", all = TRUE)
+tweetsAndUsers <- unique(merge(fullTwwetsQuery,fullUsersQuery,by="user_id", all = TRUE))
 
 #Correlaciones numéricas de usuarios
 tweetsAndUsersVariables = c("followers_count", "favorite_count", "retweet_count")
