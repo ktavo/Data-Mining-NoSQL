@@ -59,6 +59,8 @@ selectedVariables = c("created_at","retweet_count", "favorite_count", "hashtags"
                       "friends_count","listed_count", "statuses_count", "verified")
 treeDataFrame <- tweetsAndUsers[selectedVariables]
 
-
+treeDataFrame$popular <- FALSE
+treeDataFrame$popular[treeDataFrame$favorite_count > 0] <- TRUE
+treeDataFrame$popular[treeDataFrame$retweet_count > 0] <- TRUE
 
 
