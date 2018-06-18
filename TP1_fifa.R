@@ -41,5 +41,21 @@ noNASymbols <- subset(symbols, is.na(symbols))
 
 
 
+#Consultas NOSQL
+demoQuery <- tweetsConection$find('{"favorite_count" : "{ "$gt": "1" }"}')
+
+
+#Merge two collections
+tweetsAndUsers <- merge(fullTwwetsQuery,fullUserssQuery,by="user_id", all = TRUE)
+
+#Correlaciones numéricas de usuarios
+tweetsAndUsersVariables = c("followers_count", "favorite_count", "retweet_count")
+numericTweetsAndUsersData <- tweetsAndUsers[tweetsAndUsersVariables]
+numericTweetsAndUsersDataCorrelationMatrix = cor(numericTweetsAndUsersData)
+corrplot.mixed(numericTweetsAndUsersDataCorrelationMatrix, lower = "number", upper = "shade", addshade = "all")
+
+
+
+
 
 
