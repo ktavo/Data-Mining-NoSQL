@@ -64,3 +64,19 @@ treeDataFrame$popular[treeDataFrame$favorite_count > 0] <- TRUE
 treeDataFrame$popular[treeDataFrame$retweet_count > 0] <- TRUE
 
 
+
+
+## 70% of the sample size
+smp_size <- floor(0.7 * nrow(treeDataFrame))
+
+## set the seed to make your partition reproducible
+set.seed(123)
+train_ind <- sample(seq_len(nrow(treeDataFrame)), size = smp_size)
+
+trainTreeDataFrame <- treeDataFrame[train_ind, ]
+testTreeDataFrame <- treeDataFrame[-train_ind, ]
+
+
+
+
+
