@@ -54,7 +54,10 @@ numericTweetsAndUsersData <- tweetsAndUsers[tweetsAndUsersVariables]
 numericTweetsAndUsersDataCorrelationMatrix = cor(numericTweetsAndUsersData)
 corrplot.mixed(numericTweetsAndUsersDataCorrelationMatrix, lower = "number", upper = "shade", addshade = "all")
 
-
+selectedVariables = c("created_at","retweet_count", "favorite_count", "hashtags", "is_quote",
+                      "reply_to_screen_name","source", "favourites_count", "followers_count", 
+                      "friends_count","listed_count", "statuses_count", "verified")
+treeDataFrame <- tweetsAndUsers[selectedVariables]
 
 
 
