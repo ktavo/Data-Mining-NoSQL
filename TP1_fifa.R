@@ -67,11 +67,11 @@ selectedVariables = c("created_at","retweet_count", "favorite_count", "is_quote"
 treeDataFrame <- tweetsAndUsers[preSelectedVariables]
 
 treeDataFrame$popular <- FALSE
-treeDataFrame$popular[treeDataFrame$favorite_count > 0] <- TRUE
-treeDataFrame$popular[treeDataFrame$retweet_count > 0] <- TRUE
+treeDataFrame$popular[treeDataFrame$favorite_count > favoriteCountMean] <- TRUE
+treeDataFrame$popular[treeDataFrame$retweet_count > retwwetCountMean] <- TRUE
 
-toDeleteVariables <- c("retweet_count", "favorite_count")
-treeDataFrame[ , !(names(treeDataFrame) %in% toDeleteVariables)]
+#toDeleteVariables <- c("retweet_count", "favorite_count")
+#treeDataFrame[ , !(names(treeDataFrame) %in% toDeleteVariables)]
 
 ## 70% of the sample size
 smp_size <- floor(0.7 * nrow(treeDataFrame))
@@ -85,7 +85,6 @@ testTreeDataFrame <- treeDataFrame[-train_ind, ]
 
 trainTreeDataFrame$source<-as.factor(trainTreeDataFrame$source)
 trainTreeDataFrame$reply_to_screen_name<-as.factor(trainTreeDataFrame$reply_to_screen_name)
-
 
 
 #Genera árbol train
@@ -106,16 +105,19 @@ size<-width(p)
 prof<-depth(p)
 ## [1] 4
 
-
+#Create CSV training and test
 write.table(trainTreeDataFrame, file = "trainTreeData.csv",row.names=FALSE, na="",
-            col.names=c("created_at","retweet_count", "is_quote","reply_to_screen_name",
+            col.names=c("created_at", "retweet_count","favorite_count", "is_quote","reply_to_screen_name",
                         "source", "favourites_count", "followers_count","friends_count",
                         "listed_count", "statuses_count", "verified", "popular"), sep=",")
 write.table(testTreeDataFrame, file = "testTreeData.csv",row.names=FALSE, na="",
-            col.names=c("created_at","is_quote","reply_to_screen_name", "source", "favourites_count",
-                        "followers_count","friends_count","listed_count", "statuses_count", "verified", "popular"), sep=",")
+            col.names=c("created_at", "retweet_count","favorite_count", "is_quote","reply_to_screen_name",
+                        "source", "favourites_count", "followers_count","friends_count",
+                        "listed_count", "statuses_count", "verified", "popular"), sep=",")
 
-
+#Reevaluando definición de popular
+retwwetCountMean <- mean(treeDataFrame$retweet_count)
+favoriteCountMean <- mean(treeDataFrame$favorite_count)
 
 
 
