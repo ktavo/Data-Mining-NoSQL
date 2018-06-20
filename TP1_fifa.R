@@ -11,6 +11,8 @@ require("mongolite")
 library("RWeka")
 library("partykit")
 
+library("qdap")
+
 #Conexión colleción Tweets
 tweetsConection <- mongo(collection = "FIFA-dump_tweets", db = "fifa", url = "mongodb://localhost")
 fullTwwetsQuery <- tweetsConection$find('{}')
@@ -118,6 +120,42 @@ write.table(testTreeDataFrame, file = "testTreeData.csv",row.names=FALSE, na="",
 #Reevaluando definición de popular
 retwwetCountMean <- mean(treeDataFrame$retweet_count)
 favoriteCountMean <- mean(treeDataFrame$favorite_count)
+
+
+############################################################
+
+#------------------------Example------------------------
+text <- "Text mining usually involves the process of structuring the input text.
+The overarching goal is, essentially, to turn text into data for analysis, 
+via application of natural language processing (NLP) and analytical methods."
+frequent_terms <- freq_terms(text, 3)
+plot(frequent_terms)
+#------------------------Example------------------------
+
+
+#Get Hashtags from full tweets query
+fullHashtags <- fullTwwetsQuery$hashtags
+#Eliminating Null cases
+noNAHastags <- fullHashtags[!is.na(fullHashtags)]
+#Making Hashtag List
+hashtagsList <- unlist(noNAHastags)
+
+hashtagsList <- paste("#", hashtagsList, sep= "")
+
+
+paste( unlist(text), collapse=' ')
+
+
+
+frequent_terms <- freq_terms(text, 10)
+
+
+############################################################
+
+
+
+
+
 
 
 
